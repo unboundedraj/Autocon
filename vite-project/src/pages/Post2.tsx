@@ -167,7 +167,9 @@ function Post2() {
 
     return (
       <div
-        ref={(el) => (slideRefs.current[index] = el)}
+        ref={(el) => {
+          slideRefs.current[index] = el;
+        }}
         className="m-2 shadow-xl rounded overflow-hidden"
         style={style}
         onClick={() => setSelectedIndex(index)}
