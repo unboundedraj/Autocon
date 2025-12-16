@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Twitter, Copy } from 'lucide-react';
 
 const Tweet = () => {
