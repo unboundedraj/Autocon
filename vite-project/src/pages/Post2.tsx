@@ -613,7 +613,7 @@ function Post2() {
 
 Software Development, Hardware Engineering, Artificial Intelligence, Cybersecurity, Cloud Computing, Networking & Communication, Machine Learning,Database Management Systems, Embedded Systems, Internet of Things (IoT), Data Science, Blockchain & Cryptography, Operating Systems, DevOps & Automation, Computer Vision, Quantum Computing, Human-Computer Interaction, Virtual & Augmented Reality (VR/AR), Edge Computing, Natural Language Processing (NLP), Game Development, Healthcare & Medicine, Law & Order, Crime & Forensics, Politics & Governance, Military & Defense, Futuristic & Sci-fi, Real Estate, Education & Learning, Finance & Banking, Business & Management, Marketing & Advertising, Social Media & Communication, Environmental Science, Biotechnology, Automotive & Transportation, Aerospace & Aviation, Robotics, Agriculture & Food Tech, Energy & Utilities, Urban Planning & Smart Cities, E-commerce & Retail, Logistics & Supply Chain, Ethics & Philosophy, Psychology & Human Behavior, Space Exploration, Tourism & Hospitality, Entertainment & Media, Sports & Fitness, Art & Design, History & Anthropology.
 
-Also provide a few real-world examples or scenarios where this term is used. Provide your response in the following format: Domain:....(provide 1-2 out of the above).(copy option)  sub domain:....(provide 2 to 4 not necessarily from the above )(copy option) slide 1:(Tell about the topic in 50 words) (copy option), slide 2:(tell more about the topic in 50 words)(copy option) ...you can increase the no of slides as per your convenience
+Also provide a few real-world examples or scenarios where this term is used. Provide your response in the following format: Domain:....(provide 1-2 out of the above).(copy option)  sub domain:....(provide 2 to 4 not necessarily from the above )(copy option) slide 1:(Tell about the topic in 50 words) (copy option), slide 2:(tell more about the topic in 50 words)(copy option) ...you can increase the no of slides as per your convenience. 
 
 The term / phrase is: 
 `)}
@@ -622,7 +622,7 @@ The term / phrase is:
                   </button>
                   <button 
                     className="px-4 py-2 bg-amber-300 text-white rounded-md hover:bg-cyan-400 transition w-full"
-                    onClick={() => navigator.clipboard.writeText(`Hey there, I want you to provide a nice, short(about 60 words) long caption for a post that i am going to be making on instagram, ensure that you add hashtags as well, the post is about:
+                    onClick={() => navigator.clipboard.writeText(`Hey there, I want you to provide a nice, short(about 60 words) long caption for a post that i am going to be making on instagram, ensure that you add hashtags as well but don't mention my name anywhere and don't put it inside any types of quotes since i will directly copy and past it, the post is about:
 `)}
                   >
                     Copy Prompt 2
