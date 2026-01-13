@@ -622,7 +622,7 @@ The term / phrase is:
                   </button>
                   <button 
                     className="px-4 py-2 bg-amber-300 text-white rounded-md hover:bg-cyan-400 transition w-full"
-                    onClick={() => navigator.clipboard.writeText(`Hey there, I want you to provide a nice, short(about 60 words) long caption for a post that i am going to be making on instagram, ensure that you add hashtags as well but don't mention my name anywhere and don't put it inside any types of quotes since i will directly copy and past it, the post is about:
+                    onClick={() => navigator.clipboard.writeText(`Hey there, I want you to provide a nice, short(about 60 words) long caption for a post that i am going to be making on instagram, ensure that you add hashtags as well but don't mention my name anywhere and don't put it inside any types of quotes since i will directly copy and past it(if possible then also add the link to the documentation related to it), the post is about:
 `)}
                   >
                     Copy Prompt 2
