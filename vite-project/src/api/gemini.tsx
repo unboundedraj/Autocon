@@ -5,33 +5,41 @@ const API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 export const getWordMeaning = async (word: string) => {
-  try {
-    const model = genAI.getGenerativeModel({ model: "models/gemini-2.0-flash" });
+  const maxRetries = 3;
+  let attempt = 0;
 
-    const prompt = `
-Hey there, I am going to provide you a word now and I want you to reply by filling in the following format:
+  while (attempt < maxRetries) {
+    try {
+      // Update the endpoint to use Gemini 2.5 Flash model
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`, {
+        method: 'POST',
+        body: JSON.stringify({ word }),
+        headers: {
+          'Content-Type': 'application/json',
+          // Add your API key or other headers if needed
+        },
+      });
 
-Word: <Your word here>
-Meaning (EN): <Your meaning in English here>
-Meaning (HI): <Your meaning in Hindi here>
-Sentence 1: <Example sentence 1>
-Sentence 2: <Example sentence 2>
-Sentence 3: <Example sentence 3>
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (errorData.error && errorData.error.code === 429) {
+          // Quota exceeded, wait and retry
+          const retryAfter = errorData.retryAfter || 30; // Default to 30 seconds if not provided
+          await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+          attempt++;
+          continue; // Retry the request
+        }
+        throw new Error(`API error: ${errorData.error.message}`);
+      }
 
-Note:
-- The Hindi meaning must be in Hindi script only.
-- Return the result in this layout exactly so I can copy it directly.
-
-The word is: ${word}
-    `.trim();
-
-    const result = await model.generateContent([prompt]);
-    const response = await result.response;
-    const text = response.text();
-
-    return text;
-  } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "Error fetching detailed meaning.";
+      const data = await response.json();
+      return data; // Return the fetched data
+    } catch (error) {
+      console.error(`Attempt ${attempt + 1} failed:`, error);
+      attempt++;
+      if (attempt >= maxRetries) {
+        throw new Error('Max retries reached. Unable to fetch word meaning.');
+      }
+    }
   }
 };

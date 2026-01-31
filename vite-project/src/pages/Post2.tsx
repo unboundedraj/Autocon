@@ -7,6 +7,7 @@ interface Slide {
   fontSize: number;
   bgColor: string;
   bgImage: string | null;
+  bgFit?: 'width' | 'height';
   fontColor: string;
   bold: boolean;
   italic: boolean;
@@ -47,6 +48,7 @@ function Post2() {
     fontSize: 24,
     bgColor: '#FFFFFF',
     bgImage: null,
+    bgFit: 'width',
     fontColor: '#000000',
     bold: false,
     italic: false,
@@ -118,10 +120,13 @@ function Post2() {
     const style: React.CSSProperties = {
       fontFamily: slide.fontFamily,
       fontSize: `${slide.fontSize}px`,
-      backgroundColor: slide.bgImage ? 'transparent' : slide.bgColor,
-      backgroundImage: slide.bgImage ? `url(${slide.bgImage})` : 'none',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
+      backgroundColor: slide.bgColor,
+      backgroundImage: slide.bgImage ? `url("${slide.bgImage}")` : 'none',
+      backgroundSize: slide.bgImage
+        ? (slide.bgFit === 'height' ? 'auto 100%' : '100% auto')
+        : 'cover',
+      backgroundPosition: 'center center',
+      backgroundRepeat: 'no-repeat',
       color: slide.fontColor,
       fontWeight: slide.bold ? 'bold' : 'normal',
       fontStyle: slide.italic ? 'italic' : 'normal',
@@ -178,7 +183,8 @@ function Post2() {
           <>
             <div className="absolute inset-0" style={{
               border: `8px solid ${slide.bgColor}`,
-              borderRadius: '0px'
+              borderRadius: '0px',
+              backgroundColor: slide.bgColor
             }}>
               <img
                 src={closingImageArray[slide.currentImage]}
@@ -541,7 +547,8 @@ function Post2() {
                         if (file) {
                           const reader = new FileReader();
                           reader.onload = (ev) => {
-                            updateSlide(selectedIndex, 'bgImage', ev.target?.result as string);
+                            const dataUrl = ev.target?.result as string;
+                            updateSlide(selectedIndex, 'bgImage', dataUrl);
                           };
                           reader.readAsDataURL(file);
                         }
@@ -549,12 +556,29 @@ function Post2() {
                       className="w-full text-sm text-slate-300"
                     />
                     {slides[selectedIndex].bgImage && (
-                      <button
-                        className="mt-2 px-3 py-1 bg-red-500 text-white rounded-md"
-                        onClick={() => updateSlide(selectedIndex, 'bgImage', null)}
-                      >
-                        Remove Image
-                      </button>
+                      <div className="mt-2 flex items-center space-x-2">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            className={`px-3 py-1 rounded-md transition ${slides[selectedIndex].bgFit === 'width' ? 'bg-blue-500 text-white' : 'bg-slate-600 text-slate-200'}`}
+                            onClick={() => updateSlide(selectedIndex, 'bgFit', 'width')}
+                          >
+                            Fit Width
+                          </button>
+                          <button
+                            className={`px-3 py-1 rounded-md transition ${slides[selectedIndex].bgFit === 'height' ? 'bg-blue-500 text-white' : 'bg-slate-600 text-slate-200'}`}
+                            onClick={() => updateSlide(selectedIndex, 'bgFit', 'height')}
+                          >
+                            Fit Height
+                          </button>
+                        </div>
+
+                        <button
+                          className="px-3 py-1 bg-red-500 text-white rounded-md"
+                          onClick={() => updateSlide(selectedIndex, 'bgImage', null)}
+                        >
+                          Remove Image
+                        </button>
+                      </div>
                     )}
                   </div>
 
