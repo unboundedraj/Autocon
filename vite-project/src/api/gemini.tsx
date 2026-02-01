@@ -1,8 +1,5 @@
 // src/api/gemini.js
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY
-const genAI = new GoogleGenerativeAI(API_KEY);
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 export const getWordMeaning = async (word: string) => {
   const maxRetries = 3;
@@ -11,14 +8,17 @@ export const getWordMeaning = async (word: string) => {
   while (attempt < maxRetries) {
     try {
       // Update the endpoint to use Gemini 2.5 Flash model
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`, {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
+        {
         method: 'POST',
         body: JSON.stringify({ word }),
         headers: {
           'Content-Type': 'application/json',
           // Add your API key or other headers if needed
         },
-      });
+      }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
